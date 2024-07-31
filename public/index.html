@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Student Stat Tracking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+  <body>
+    <nav>
+      <ul>
+        <li><a href="#home" onclick="showSection('home')">Home</a></li>
+        <li>
+          <a href="#activities" onclick="showSection('activities')"
+            >Activities</a
+          >
+        </li>
+        <li><a href="#stats" onclick="showSection('stats')">Stats</a></li>
+        <li><a href="#goals" onclick="showSection('goals')">Goals</a></li>
+      </ul>
+    </nav>
+    <header>
+      <h1>College Student Stat Tracker</h1>
+    </header>
+    <main>
+      <section id="home" class="content-section active">
+        <div id="app">
+          <!-- 카테고리 및 스탯 표시 영역 -->
+        </div>
+      </section>
+      <section id="activities" class="content-section">
+        <h2>Activities</h2>
+        <p>Activities section content goes here...</p>
+      </section>
+      <section id="stats" class="content-section">
+        <h2>Stats</h2>
+        <p>Stats section content goes here...</p>
+      </section>
+      <section id="goals" class="content-section">
+        <h2>Goals</h2>
+        <p>Goals section content goes here...</p>
+      </section>
+    </main>
+
+    <!-- 모달 창 -->
+    <div id="modal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>활동 기록</h2>
+        <form id="activityForm">
+          <label for="activityDate">날짜:</label>
+          <input type="date" id="activityDate" name="activityDate" required />
+          <label for="activityDetails">활동 세부 사항:</label>
+          <textarea
+            id="activityDetails"
+            name="activityDetails"
+            required
+          ></textarea>
+          <input type="hidden" id="activityCategory" name="activityCategory" />
+          <button type="submit">저장</button>
+        </form>
+      </div>
+    </div>
+
+    <script src="js/scripts.js"></script>
+  </body>
+</html>
