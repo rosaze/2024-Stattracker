@@ -10,8 +10,8 @@
       href="https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&display=swap"
       rel="stylesheet"
     />
-
     <link rel="stylesheet" href="css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
     <nav>
@@ -27,7 +27,7 @@
       </ul>
     </nav>
     <header>
-      <h1>College Student Stat Tracker</h1>
+      <h1 id="pageTitle">College Student Stat Tracking</h1>
     </header>
     <main>
       <section id="home" class="content-section active">
@@ -35,14 +35,28 @@
           <!-- 카테고리 및 스탯 표시 영역 -->
         </div>
       </section>
+
       <section id="activities" class="content-section">
-        <h2>Activities</h2>
-        <p>Activities section content goes here...</p>
+        <div class="activities-container">
+          <!-- 스탯 바 -->
+          <div id="statBars"></div>
+          <!-- 활동 기록 박스 -->
+          <div id="activityRecords" class="activity-records">
+            <h3>활동 기록</h3>
+            <div id="recordsList">
+              <!-- 각 카테고리의 활동 기록들이 여기에 표시될 예정 -->
+            </div>
+          </div>
+        </div>
       </section>
+
       <section id="stats" class="content-section">
         <h2>Stats</h2>
-        <p>Stats section content goes here...</p>
+        <div class="chart-container">
+          <canvas id="statsChart"></canvas>
+        </div>
       </section>
+
       <section id="goals" class="content-section">
         <h2>Goals</h2>
         <p>Goals section content goes here...</p>
@@ -50,7 +64,7 @@
     </main>
 
     <!-- 모달 창 -->
-    <div id="modal" class="modal">
+    <div id="modal" class="modal" style="display: none">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h2>활동 기록</h2>
@@ -70,5 +84,7 @@
     </div>
 
     <script src="js/scripts.js"></script>
+    <script src="js/chart.js"></script>
+    <script src="js/bars.js"></script>
   </body>
 </html>
