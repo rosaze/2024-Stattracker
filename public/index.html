@@ -28,6 +28,7 @@
     </nav>
     <header>
       <h1 id="pageTitle">College Student Stat Tracking</h1>
+      <h2 id="subTitle"></h2>
     </header>
     <main>
       <section id="home" class="content-section active">
@@ -38,27 +39,39 @@
 
       <section id="activities" class="content-section">
         <div class="activities-container">
-          <!-- 스탯 바 -->
-          <div id="statBars"></div>
-          <!-- 활동 기록 박스 -->
-          <div id="activityRecords" class="activity-records">
-            <h3>활동 기록</h3>
-            <div id="recordsList">
-              <!-- 각 카테고리의 활동 기록들이 여기에 표시될 예정 -->
+          <div class="stat-bars-container">
+            <h3>Progress</h3>
+            <div id="statBars">
+              <!-- 스탯 바들이 여기에 동적으로 추가됩니다 -->
+            </div>
+          </div>
+          <div class="activity-records-container">
+            <div class="activity-records-scroll">
+              <div id="recordsList">
+                <!-- 카테고리별 활동 기록이 여기에 동적으로 추가됩니다 -->
+              </div>
             </div>
           </div>
         </div>
       </section>
 
+      <!-- 새로 추가된 활동 기록 리스트 박스 -->
+      <section id="activities-history" class="content-section">
+        <div class="history-container">
+          <h3>전체 활동 기록</h3>
+          <div id="fullRecordsList">
+            <!-- 전체 활동 기록이 여기에 표시됩니다 -->
+          </div>
+        </div>
+      </section>
+
       <section id="stats" class="content-section">
-        <h2>Stats</h2>
         <div class="chart-container">
           <canvas id="statsChart"></canvas>
         </div>
       </section>
 
       <section id="goals" class="content-section">
-        <h2>Goals</h2>
         <p>Goals section content goes here...</p>
       </section>
     </main>

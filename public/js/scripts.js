@@ -1,34 +1,45 @@
+// 전역 변수로 카테고리 정의
+const categories = [
+  "Contests",
+  "Language study",
+  "Major study",
+  "Networking",
+  "Reading",
+];
+
 document.addEventListener("DOMContentLoaded", () => {
-  // 변수 선언
+  initializeApp();
+});
+
+function initializeApp() {
   const app = document.getElementById("app");
   const modal = document.getElementById("modal");
   const closeModalBtn = document.querySelector(".close");
   const activityForm = document.getElementById("activityForm");
 
-  // 카테고리 정의
-  const categories = [
-    "Contests",
-    "Language study",
-    "Major study",
-    "Networking",
-    "Reading",
-  ];
+  createCategoryElements(app);
+  setupEventListeners(modal, closeModalBtn, activityForm);
+  showSection("home");
+  updateChart();
+  loadStatBars();
+  loadActivityRecords();
+}
 
-  // 카테고리별로 동적 요소 생성
+function createCategoryElements(app) {
   categories.forEach((category) => {
     const stat = getStat(category);
-
     const categoryDiv = document.createElement("div");
     categoryDiv.classList.add("category");
     categoryDiv.innerHTML = `
-            <h2>${category}</h2>
-            <button class="record-btn" data-category="${category}">활동 기록</button>
-            <p>스탯: <span id="${category}-stat">${stat}</span>%</p>
-        `;
+      <h2>${category}</h2>
+      <button class="record-btn" data-category="${category}">활동 기록</button>
+      <p>스탯: <span id="${category}-stat">${stat}</span>%</p>
+    `;
     app.appendChild(categoryDiv);
   });
+}
 
-  // 활동 기록 버튼 클릭 이벤트 핸들러
+function setupEventListeners(modal, closeModalBtn, activityForm) {
   document.querySelectorAll(".record-btn").forEach((button) => {
     button.addEventListener("click", (event) => {
       const category = event.target.getAttribute("data-category");
@@ -36,77 +47,65 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   });
 
-  // 모달 닫기 이벤트
-  closeModalBtn.onclick = function () {
-    modal.style.display = "none";
+  closeModalBtn.onclick = () => (modal.style.display = "none");
+  window.onclick = (event) => {
+    if (event.target == modal) modal.style.display = "none";
   };
 
-  window.onclick = function (event) {
-    if (event.target == modal) {
-      modal.style.display = "none";
-    }
-  };
+  activityForm.onsubmit = handleActivitySubmit;
 
-  // 활동 기록 저장 처리
-  activityForm.onsubmit = function (event) {
-    event.preventDefault(); // 기본 폼 제출 막기
+  document.querySelectorAll("nav a").forEach((link) => {
+    link.addEventListener("click", (e) => {
+      e.preventDefault();
+      const sectionId = e.target.getAttribute("href").substring(1);
+      showSection(sectionId);
+    });
+  });
+}
 
-    const category = document.getElementById("activityCategory").value;
-    const activityDate = document.getElementById("activityDate").value;
-    const activityDetails = document.getElementById("activityDetails").value;
+function handleActivitySubmit(event) {
+  event.preventDefault();
+  const category = document.getElementById("activityCategory").value;
+  const activityDate = document.getElementById("activityDate").value;
+  const activityDetails = document.getElementById("activityDetails").value;
 
-    // 필드가 비어있는지 확인
-    if (!activityDate || !activityDetails) {
-      alert("날짜와 활동 세부 사항을 입력하세요.");
-      return;
-    }
+  if (!activityDate || !activityDetails) {
+    alert("날짜와 활동 세부 사항을 입력하세요.");
+    return;
+  }
 
-    // 스탯 업데이트
-    const statSpan = document.getElementById(`${category}-stat`);
-    let stat = parseInt(statSpan.textContent, 10);
-    stat = Math.min(stat + 1, 100);
-    statSpan.textContent = stat;
+  updateStat(category);
+  saveActivityRecord(category, activityDate, activityDetails);
 
-    saveStat(category, stat);
-    saveActivityRecord(category, activityDate, activityDetails);
-
-    // 모달 닫기 및 차트 업데이트
-    modal.style.display = "none";
-    updateChart();
-  };
-
-  // 페이지 초기화
-  showSection("home");
+  document.getElementById("modal").style.display = "none";
   updateChart();
-});
+  loadStatBars();
+  loadActivityRecords();
+}
 
-// 모달 열기 함수
+function updateStat(category) {
+  const statSpan = document.getElementById(`${category}-stat`);
+  let stat = parseInt(statSpan.textContent, 10);
+  stat = Math.min(stat + 1, 100);
+  statSpan.textContent = stat;
+  saveStat(category, stat);
+}
+
 function openModal(category) {
   const modal = document.getElementById("modal");
-  const activityCategory = document.getElementById("activityCategory");
-  activityCategory.value = category;
+  document.getElementById("activityCategory").value = category;
   modal.style.display = "block";
 }
 
-// 스탯 저장
 function saveStat(category, stat) {
   localStorage.setItem(`${category}-stat`, stat);
 }
 
-// 활동 기록 저장
-function saveActivityRecord(category, date, details) {
-  const records = JSON.parse(localStorage.getItem(`${category}-records`)) || [];
-  records.push({ date: date, details: details });
-  localStorage.setItem(`${category}-records`, JSON.stringify(records));
-}
-
-// 스탯 가져오기
 function getStat(category) {
   const stat = localStorage.getItem(`${category}-stat`);
   return stat ? parseInt(stat, 10) : 0;
 }
 
-// 섹션 보여주기
 function showSection(sectionId) {
   const sections = document.querySelectorAll(".content-section");
   sections.forEach((section) => {
@@ -114,46 +113,174 @@ function showSection(sectionId) {
     section.classList.remove("active");
   });
   const targetSection = document.getElementById(sectionId);
-  targetSection.style.display = "block";
-  targetSection.classList.add("active");
+  if (targetSection) {
+    targetSection.style.display = "block";
+    targetSection.classList.add("active");
 
-  if (sectionId === "stats") {
-    updateChart(); // 'stats' 섹션으로 전환 시 차트를 업데이트
-  } else if (sectionId === "activities") {
-    loadActivityRecords(); // 'activities' 섹션으로 전환 시 활동 기록을 로드
+    // 헤더의 페이지 제목 업데이트
+    const pageTitle = document.getElementById("pageTitle");
+    if (sectionId === "home") {
+      pageTitle.textContent = "College Student Stat Tracking";
+    } else {
+      pageTitle.textContent =
+        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
+    }
+
+    if (sectionId === "stats") {
+      updateChart();
+    } else if (sectionId === "activities") {
+      loadStatBars();
+      loadActivityRecords();
+    }
+    // goals 페이지에 대한 특정 로직이 필요하다면 여기에 추가
+  } else {
+    console.error(`Section with id ${sectionId} not found`);
   }
 }
 
-// 활동 기록 로드
+// 페이지 로드 시 초기 섹션 설정
+document.addEventListener("DOMContentLoaded", () => {
+  showSection("home");
+});
+
+function loadStatBars() {
+  const statBarsContainer = document.getElementById("statBars");
+  if (!statBarsContainer) return;
+
+  statBarsContainer.innerHTML = "";
+  categories.forEach((category) => {
+    const stat = getStat(category);
+    const statBarDiv = document.createElement("div");
+    statBarDiv.classList.add("stat-bar");
+    statBarDiv.innerHTML = `
+      <div class="label">${category}</div>
+      <div class="progress">
+        <div class="progress-bar" style="width: ${stat}%"></div>
+      </div>
+      <div class="percentage">${stat}%</div>
+    `;
+    statBarsContainer.appendChild(statBarDiv);
+  });
+}
+
 function loadActivityRecords() {
   const recordsList = document.getElementById("recordsList");
-  if (!recordsList) return; // recordsList가 없는 경우 함수 종료
+  if (!recordsList) return;
 
-  recordsList.innerHTML = ""; // 기존 기록들을 초기화
-
-  const categories = [
-    "Contests",
-    "Language study",
-    "Major study",
-    "Networking",
-    "Reading",
-  ];
-
+  recordsList.innerHTML = "";
   categories.forEach((category) => {
     const records =
       JSON.parse(localStorage.getItem(`${category}-records`)) || [];
     if (records.length > 0) {
+      const categoryDiv = document.createElement("div");
+      categoryDiv.classList.add("category-records");
+
       const categoryTitle = document.createElement("h4");
-      categoryTitle.textContent = category;
-      recordsList.appendChild(categoryTitle);
+      categoryTitle.innerHTML = `${category} <span>${records.length}</span>`;
+      categoryTitle.addEventListener("click", toggleCategory);
+      categoryDiv.appendChild(categoryTitle);
 
       const ul = document.createElement("ul");
+      ul.classList.add("record-list");
       records.forEach((record) => {
         const li = document.createElement("li");
         li.textContent = `${record.date}: ${record.details}`;
         ul.appendChild(li);
       });
-      recordsList.appendChild(ul);
+      categoryDiv.appendChild(ul);
+      recordsList.appendChild(categoryDiv);
     }
   });
+
+  if (recordsList.children.length === 0) {
+    const noRecordsMessage = document.createElement("p");
+    noRecordsMessage.textContent = "아직 기록된 활동이 없습니다.";
+    recordsList.appendChild(noRecordsMessage);
+  }
 }
+
+function toggleCategory(event) {
+  const categoryTitle = event.currentTarget;
+  const recordList = categoryTitle.nextElementSibling;
+  categoryTitle.classList.toggle("collapsed");
+  recordList.classList.toggle("expanded");
+}
+
+function saveActivityRecord(category, date, details) {
+  const records = JSON.parse(localStorage.getItem(`${category}-records`)) || [];
+  records.push({ date, details });
+  localStorage.setItem(`${category}-records`, JSON.stringify(records));
+}
+/*
+
+function updateChart() {
+  const ctx = document.getElementById("statsChart").getContext("2d");
+  const data = categories.map((category) => {
+    const stat = getStat(category);
+    return stat ? parseInt(stat, 10) : 0;
+  });
+
+  if (window.myChart) {
+    window.myChart.destroy(); // 기존 차트를 제거하여 중복 생성 방지
+  }
+
+  window.myChart = new Chart(ctx, {
+    type: "radar",
+    data: {
+      labels: categories,
+      datasets: [
+        {
+          label: "활동 스탯",
+          data: data,
+          backgroundColor: "rgba(255, 105, 180, 0.2)",
+          borderColor: "rgba(255, 105, 180, 1)",
+          borderWidth: 2,
+          pointBackgroundColor: "rgba(255, 105, 180, 1)",
+          pointBorderColor: "#fff",
+          pointHoverBackgroundColor: "#fff",
+          pointHoverBorderColor: "rgba(255, 105, 180, 1)",
+        },
+      ],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scale: {
+        ticks: {
+          beginAtZero: true,
+          max: 100,
+          min: 0,
+          stepSize: 10,
+          showLabelBackdrop: false,
+          backdropColor: "rgba(255, 255, 255, 0)",
+          callback: function (value) {
+            return value + "%";
+          },
+        },
+        angleLines: {
+          color: "rgba(0, 0, 0, 0.1)",
+        },
+        gridLines: {
+          color: "rgba(0, 0, 0, 0.1)",
+        },
+        pointLabels: {
+          fontSize: 14,
+          fontColor: "#4b0082",
+        },
+      },
+      legend: {
+        position: "top",
+      },
+      tooltips: {
+        callbacks: {
+          label: function (tooltipItem, data) {
+            const label = data.labels[tooltipItem.index];
+            const value = data.datasets[0].data[tooltipItem.index];
+            return `${label}: ${value}%`;
+          },
+        },
+      },
+    },
+  });
+}
+*/

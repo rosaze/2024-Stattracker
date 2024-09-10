@@ -10,7 +10,7 @@ body {
 
 nav {
     width: 100%;
-    background-color: #d5a6bd;
+    background-color: #e8a8c6;
     padding: 10px 0;
     /* box-shadow 제거 */
 }
@@ -32,7 +32,7 @@ nav ul li a {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 20px;
-    background-color: #d5a6bd;
+    background-color: #e8a8c6;
     transition: background-color 0.3s ease;
 }
 
@@ -42,10 +42,21 @@ nav ul li a:hover {
 
 header {
     width: 100%;
-    padding: 20px;
+    padding: 10px;
+    /*고정*/
     background: #ffd1dc;
     text-align: center;
 }
+
+#pageTitle {
+    color: #4b0082;
+    font-size: 2.5em;
+    margin: 0;
+
+    margin-bottom: 10px;
+}
+
+
 
 h1 {
     color: #4b0082;
@@ -195,50 +206,87 @@ main {
     background-color: #ff1493;
 }
 
-/* 차트 컨테이너 스타일 */
+/* 차트 컨테이너 스타일 오각형*/
 .chart-container {
-    position: relative;
-    width: 100%;
-    max-width: 650px;
-    /* 30% 크기 증가 */
-    height: auto;
+    max-width: 900px;
     margin: 0 auto;
     padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    height: 500px;
+
 }
 
-/* 캔버스 요소의 최대 높이를 제한 */
+/* 차트 캔버스의 최대 높이 제한 오각형 */
 .chart-container canvas {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 520px;
+    max-height: 100% !important;
+    width: auto !important;
+}
 
+/* 액티비티 (bar) */
+.activities-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 20px;
+    height: 500px;
+    /* 고정 높이 설정, 필요에 따라 조정 가능 */
+}
+
+.stat-bars-container {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+    /* 내용이 많아지면 스크롤 생성 */
+}
+
+.activity-records-container {
+    flex: 1;
+    background-color: #fff;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+.activity-records-scroll {
+    flex: 1;
+    overflow-y: auto;
+    /* 내용이 많아지면 스크롤 생성 */
 }
 
 #statBars {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 15px;
 }
 
+/* 기존 .stat-bar 스타일 수정 */
 .stat-bar {
     display: flex;
     align-items: center;
     gap: 10px;
+    margin-bottom: 15px;
 }
 
 .stat-bar .label {
-    background-color: #ffcbd7;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 30px;
+    background-color: #ffd1dc;
+    color: #4b0082;
+    padding: 8px 12px;
+    border-radius: 20px;
     font-weight: bold;
+    min-width: 120px;
+    text-align: center;
 }
 
 .stat-bar .progress {
-    height: 20px;
-    background-color:
-        #aac4ff;
-    border-radius: 20px;
+    height: 15px;
+    background-color: #f0e6ff;
+    border-radius: 10px;
     overflow: hidden;
     flex-grow: 1;
 }
@@ -250,12 +298,9 @@ label: 카테고리 이름을 표시합니다.
 */
 .stat-bar .progress .progress-bar {
     height: 100%;
-    background-color: #e7ad92;
-    border-radius: 20px;
-    text-align: right;
-    padding-right: 10px;
-    color: white;
-    font-weight: bold;
+    background-color: #9370db;
+    border-radius: 10px;
+    transition: width 0.3s ease;
 }
 
 .stat-bar .percentage {
@@ -263,29 +308,13 @@ label: 카테고리 이름을 표시합니다.
     font-weight: bold;
 }
 
-/*활동기록*/
-/* 두 박스를 나란히 배치 */
-.activities-container {
-    display: flex;
-    align-items: flex-start;
-    gap: 20px;
-}
+
 
 #statBars {
     flex: 2;
     /* 스탯 바가 더 넓게 차지 */
 }
 
-.activity-records {
-    flex: 1;
-    /* 활동 기록 박스가 더 좁게 차지 */
-    background-color: #f8f8f8;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 400px;
-}
 
 /* 활동 기록 리스트 스타일 */
 #recordsList h4 {
@@ -347,27 +376,131 @@ label: 카테고리 이름을 표시합니다.
 
 /* activities 페이지에서만 활동 기록 박스를 표시 */
 #activityRecords {
-    display: none;
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f0fc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+
+
+
+
 /* activities 섹션이 active일 때만 표시 */
-#activities.active+#activityRecords {
+#activities-history {
     display: block;
 }
 
-/* 활동 기록 박스를 메인 컨텐츠 옆에 배치 */
-#activities.active .activities-container {
-    display: flex;
-    justify-content: space-between;
+/* 활동 기록 리스트 박스 스타일 */
+.history-container {
+    background-color: #fff;
+    padding: 40%;
+    margin-top: 60%;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.activity-records {
-    flex: 1;
-    margin-left: 20px;
-    background-color: #f8f8f8;
-    padding: 20px;
+#fullRecordsList {
+    list-style-type: none;
+    padding: 0;
+}
+
+.category-records {
+    margin-bottom: 20px;
+}
+
+
+.category-records h4:hover {
+    background-color: #ffb6c1;
+    transform: translateY(-2px);
+}
+
+/* 기존 .category-records h4 스타일 수정 */
+.category-records h4 {
+    cursor: pointer;
+    padding: 12px 15px;
+    background-color: #ffd1dc;
     border-radius: 10px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    overflow-y: auto;
-    max-height: 400px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #4b0082;
+}
+
+
+.category-records h4::after {
+    content: '▼';
+    font-size: 0.8em;
+    transition: transform 0.3s ease;
+}
+
+.category-records h4.collapsed::after {
+    transform: rotate(-90deg);
+}
+
+/* 기존 #recordsList 스타일 수정 */
+#recordsList {
+    margin-top: 0;
+}
+
+#recordsList h4 {
+    color: #ff1493;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ff1493;
+    padding-bottom: 5px;
+}
+
+#recordsList ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.record-list {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.record-list.expanded {
+    max-height: 1000px;
+    opacity: 1;
+}
+
+
+
+#recordsList li:hover {
+    background-color: #f0e6ff;
+    transform: translateX(5px);
+}
+
+#recordsList ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+#recordsList li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f8f0fc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+
+
+/* 추가 스타일 수정 */
+.content-section {
+    background-color: #f8f0fc;
+    box-shadow: none;
+}
+
+h2, h3 {
+    color: #4b0082;
+    margin-bottom: 20px;
+    text-align: center;
 }
