@@ -1,0 +1,107 @@
+.goals-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background: linear-gradient(45deg, #f3e5f5, #e1bee7, #ce93d8);
+    border-radius: 20px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.holographic-form {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.holographic-form select,
+.holographic-form input,
+.holographic-form button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 25px;
+    background: rgba(255, 255, 255, 0.3);
+    color: #4a0e4e;
+    font-size: 16px;
+}
+
+.add-goal-btn {
+    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+    color: rgb(244, 172, 172);
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.add-goal-btn:hover {
+    transform: scale(1.05);
+}
+
+.goal-item {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: transform 0.3s ease;
+}
+
+.goal-item:hover {
+    transform: translateY(-5px);
+}
+
+.goal-category {
+    font-weight: bold;
+    color: #af469c;
+    background: rgba(255, 255, 255, 0.5);
+    padding: 5px 15px;
+    border-radius: 20px;
+    margin-bottom: 10px;
+    display: inline-block;
+}
+
+.goal-description {
+    margin: 10px 0;
+    color: #4a0e4e;
+}
+
+.goal-progress {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.progress-bar {
+    flex-grow: 1;
+    height: 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(45deg, #e4b0d2, #fbc2eb);
+    transition: width 0.3s ease;
+}
+
+.goal-achieved {
+    background: linear-gradient(45deg, #f3d8eb, #c9ffd0);
+}
+
+.achievement-badge {
+    background-color: #caffcc;
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
