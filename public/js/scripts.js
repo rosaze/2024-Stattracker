@@ -7,9 +7,7 @@ const categories = [
   "Reading",
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-  initializeApp();
-});
+document.addEventListener("DOMContentLoaded", initializeApp);
 
 function initializeApp() {
   const app = document.getElementById("app");
@@ -17,19 +15,18 @@ function initializeApp() {
   const closeModalBtn = document.querySelector(".close");
   const activityForm = document.getElementById("activityForm");
 
-  createCategoryElements(app);
   setupEventListeners(modal, closeModalBtn, activityForm);
   showSection("home");
   updateChart();
-  loadStatBars();
-  loadActivityRecords();
 }
 
-function createCategoryElements(app) {
+function createHomePageCategories() {
+  const app = document.getElementById("app");
+  app.innerHTML = ""; // Clear existing content
   categories.forEach((category) => {
     const stat = getStat(category);
     const categoryDiv = document.createElement("div");
-    categoryDiv.classList.add("category");
+    categoryDiv.classList.add("category", "hologram-effect");
     categoryDiv.innerHTML = `
       <h2>${category}</h2>
       <button class="record-btn" data-category="${category}">활동 기록</button>
@@ -40,11 +37,11 @@ function createCategoryElements(app) {
 }
 
 function setupEventListeners(modal, closeModalBtn, activityForm) {
-  document.querySelectorAll(".record-btn").forEach((button) => {
-    button.addEventListener("click", (event) => {
+  document.body.addEventListener("click", (event) => {
+    if (event.target.classList.contains("record-btn")) {
       const category = event.target.getAttribute("data-category");
       openModal(category);
-    });
+    }
   });
 
   closeModalBtn.onclick = () => (modal.style.display = "none");
@@ -79,8 +76,11 @@ function handleActivitySubmit(event) {
 
   document.getElementById("modal").style.display = "none";
   updateChart();
-  loadStatBars();
-  loadActivityRecords();
+  if (document.getElementById("activities").classList.contains("active")) {
+    loadStatBars();
+    loadActivityRecords();
+  }
+  updateHomePageStats();
 }
 
 function updateStat(category) {
@@ -117,16 +117,15 @@ function showSection(sectionId) {
     targetSection.style.display = "block";
     targetSection.classList.add("active");
 
-    // 헤더의 페이지 제목 업데이트
     const pageTitle = document.getElementById("pageTitle");
-    if (sectionId === "home") {
-      pageTitle.textContent = "College Student Stat Tracking";
-    } else {
-      pageTitle.textContent =
-        sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
-    }
+    pageTitle.textContent =
+      sectionId === "home"
+        ? "College Student Stat Tracking"
+        : sectionId.charAt(0).toUpperCase() + sectionId.slice(1);
 
-    if (sectionId === "stats") {
+    if (sectionId === "home") {
+      createHomePageCategories();
+    } else if (sectionId === "stats") {
       updateChart();
     } else if (sectionId === "activities") {
       loadStatBars();
@@ -137,11 +136,6 @@ function showSection(sectionId) {
     console.error(`Section with id ${sectionId} not found`);
   }
 }
-
-// 페이지 로드 시 초기 섹션 설정
-document.addEventListener("DOMContentLoaded", () => {
-  showSection("home");
-});
 
 function loadStatBars() {
   const statBarsContainer = document.getElementById("statBars");
@@ -211,76 +205,12 @@ function saveActivityRecord(category, date, details) {
   records.push({ date, details });
   localStorage.setItem(`${category}-records`, JSON.stringify(records));
 }
-/*
 
-function updateChart() {
-  const ctx = document.getElementById("statsChart").getContext("2d");
-  const data = categories.map((category) => {
-    const stat = getStat(category);
-    return stat ? parseInt(stat, 10) : 0;
-  });
-
-  if (window.myChart) {
-    window.myChart.destroy(); // 기존 차트를 제거하여 중복 생성 방지
-  }
-
-  window.myChart = new Chart(ctx, {
-    type: "radar",
-    data: {
-      labels: categories,
-      datasets: [
-        {
-          label: "활동 스탯",
-          data: data,
-          backgroundColor: "rgba(255, 105, 180, 0.2)",
-          borderColor: "rgba(255, 105, 180, 1)",
-          borderWidth: 2,
-          pointBackgroundColor: "rgba(255, 105, 180, 1)",
-          pointBorderColor: "#fff",
-          pointHoverBackgroundColor: "#fff",
-          pointHoverBorderColor: "rgba(255, 105, 180, 1)",
-        },
-      ],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scale: {
-        ticks: {
-          beginAtZero: true,
-          max: 100,
-          min: 0,
-          stepSize: 10,
-          showLabelBackdrop: false,
-          backdropColor: "rgba(255, 255, 255, 0)",
-          callback: function (value) {
-            return value + "%";
-          },
-        },
-        angleLines: {
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-        gridLines: {
-          color: "rgba(0, 0, 0, 0.1)",
-        },
-        pointLabels: {
-          fontSize: 14,
-          fontColor: "#4b0082",
-        },
-      },
-      legend: {
-        position: "top",
-      },
-      tooltips: {
-        callbacks: {
-          label: function (tooltipItem, data) {
-            const label = data.labels[tooltipItem.index];
-            const value = data.datasets[0].data[tooltipItem.index];
-            return `${label}: ${value}%`;
-          },
-        },
-      },
-    },
+function updateHomePageStats() {
+  categories.forEach((category) => {
+    const statSpan = document.getElementById(`${category}-stat`);
+    if (statSpan) {
+      statSpan.textContent = getStat(category);
+    }
   });
 }
-*/

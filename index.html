@@ -10,7 +10,10 @@
       href="https://fonts.googleapis.com/css2?family=Kalnia+Glaze:wght@100..700&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="./public/css/reactstyle.css" />
     <link rel="stylesheet" href="./public/css/styles.css" />
+    <link rel="stylesheet" href="./public/css/activitypagestyle.css" />
+    <link rel="stylesheet" href="./public/css/goals.css" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   </head>
   <body>
@@ -33,7 +36,41 @@
     <main>
       <section id="home" class="content-section active">
         <div id="app">
-          <!-- 카테고리 및 스탯 표시 영역 -->
+          <div class="category hologram-effect">
+            <h2>Contests</h2>
+            <button class="record-btn" data-category="Contests">
+              활동 기록
+            </button>
+            <p>스탯: <span id="Contests-stat">0</span>%</p>
+          </div>
+          <div class="category hologram-effect">
+            <h2>Language study</h2>
+            <button class="record-btn" data-category="Language study">
+              활동 기록
+            </button>
+            <p>스탯: <span id="Language study-stat">0</span>%</p>
+          </div>
+          <div class="category hologram-effect">
+            <h2>Major study</h2>
+            <button class="record-btn" data-category="Major study">
+              활동 기록
+            </button>
+            <p>스탯: <span id="Major study-stat">0</span>%</p>
+          </div>
+          <div class="category hologram-effect">
+            <h2>Networking</h2>
+            <button class="record-btn" data-category="Networking">
+              활동 기록
+            </button>
+            <p>스탯: <span id="Networking-stat">0</span>%</p>
+          </div>
+          <div class="category hologram-effect">
+            <h2>Reading</h2>
+            <button class="record-btn" data-category="Reading">
+              활동 기록
+            </button>
+            <p>스탯: <span id="Reading-stat">0</span>%</p>
+          </div>
         </div>
       </section>
 
@@ -72,7 +109,37 @@
       </section>
 
       <section id="goals" class="content-section">
-        <p>Goals section content goes here...</p>
+        <div class="goals-container">
+          <form id="goal-form" class="holographic-form">
+            <div class="form-group">
+              <select id="goal-category">
+                <option value="Contests">Contests</option>
+                <option value="Language study">Language study</option>
+                <option value="Major study">Major study</option>
+                <option value="Networking">Networking</option>
+                <option value="Reading">Reading</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <input
+                type="text"
+                id="goal-description"
+                placeholder="Enter your goal"
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="number"
+                id="goal-percentage"
+                min="1"
+                max="100"
+                placeholder="Target %"
+              />
+            </div>
+            <button type="submit" class="add-goal-btn">Add Goal</button>
+          </form>
+          <div id="goals-list" class="holographic-list"></div>
+        </div>
       </section>
     </main>
 
@@ -99,5 +166,6 @@
     <script src="./public/js/bars.js"></script>
     <script src="./public/js/chart.js"></script>
     <script src="./public/js/scripts.js"></script>
+    <script src="./public/js/goals.js"></script>
   </body>
 </html>

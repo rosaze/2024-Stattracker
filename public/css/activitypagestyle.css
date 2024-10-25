@@ -1,0 +1,125 @@
+/* activities 페이지에서만 활동 기록 박스를 표시 */
+#activityRecords {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f8f0fc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* Ensure it takes full width */
+}
+
+/* activities 섹션이 active일 때만 표시 */
+#activities-history {
+    display: block;
+}
+
+/* 활동 기록 리스트 박스 스타일 */
+.history-container {
+    background-color: #fff;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    /* Ensure container takes full width */
+}
+
+/* 카테고리별 기록 */
+.category-records {
+    margin-bottom: 20px;
+    width: 100%;
+    /* Ensure full width */
+}
+
+.category-records h4 {
+    cursor: pointer;
+    padding: 12px 15px;
+    background-color: #ffd1dc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: bold;
+    color: #4b0082;
+    width: 100%;
+}
+
+/* 기록 리스트 스타일 */
+#recordsList {
+    margin-top: 0;
+    width: 100%;
+    /* Ensure full width */
+}
+
+#recordsList h4 {
+    color: #ff1493;
+    margin-bottom: 10px;
+    border-bottom: 2px solid #ff1493;
+    padding-bottom: 5px;
+    width: 100%;
+    /* Ensure full width */
+}
+
+#recordsList ul {
+    list-style: none;
+    padding-left: 0;
+    width: 100%;
+    /* Ensure full width */
+}
+
+#recordsList li {
+    padding: 10px 15px;
+    margin-bottom: 8px;
+    background-color: #f8f0fc;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    /* Ensure full width */
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .category-records h4 {
+        font-size: 1.1em;
+        padding: 10px;
+        flex-wrap: wrap;
+        /* Wraps text to fit smaller screens */
+    }
+
+    #recordsList li {
+        padding: 8px 12px;
+        font-size: 1em;
+        flex-wrap: wrap;
+        /* Allows text to wrap */
+    }
+
+    #recordsList {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .category-records h4 {
+        font-size: 1em;
+        padding: 8px;
+        flex-wrap: wrap;
+    }
+
+    #recordsList li {
+        padding: 6px 10px;
+        font-size: 0.9em;
+        flex-wrap: wrap;
+        /* Ensures the content wraps in smaller screens */
+    }
+
+    #recordsList {
+        width: 100%;
+        /* Takes full width */
+    }
+}
