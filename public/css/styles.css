@@ -16,12 +16,23 @@ body {
 }
 
 
+
+
+
 nav {
     width: 100%;
-    background-color: #e8a8c6;
     padding: 10px 0;
-    /* box-shadow 제거 */
+    background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.2)),
+        url('/2024-Stattracker/images/nav.jpg');
+    /* 덜 투명한 흰색 오버레이 */
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: transparent;
+    box-shadow: none;
 }
+
+
 
 nav ul {
     list-style: none;
@@ -40,7 +51,7 @@ nav ul li a {
     text-decoration: none;
     padding: 10px 20px;
     border-radius: 20px;
-    background-color: #e8a8c6;
+    background-color: transparent;
     transition: background-color 0.3s ease;
 }
 
@@ -48,13 +59,25 @@ nav ul li a:hover {
     background-color: #c27ba0;
 }
 
+
 header {
     width: 100%;
-    padding: 10px;
-    /*고정*/
-    background: #ffd1dc;
+    padding: 0;
+    /* 패딩 제거 */
     text-align: center;
+    background-image: url('/2024-Stattracker/images/wallpaper.png');
+    background-size: 100% auto;
+    /* 배경 이미지가 가로로 100%로 채워지도록 */
+    background-repeat: no-repeat;
+    background-position: center;
+    color: #4b0082;
+    position: relative;
+    /* 텍스트 배치를 위한 위치 설정 */
 }
+
+
+
+
 
 #pageTitle {
     color: #4b0082;
