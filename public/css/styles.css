@@ -96,13 +96,14 @@ main {
     animation: fadeIn 0.5s;
 }
 
+/* 주요 컨테이너의 배경을 투명하게 설정 */
+.page-container,
+.content-wrapper,
 .content-section,
-.activities-container,
-.stat-bars-container,
-.activity-records-container {
-    background-color: transparent;
+.activities-container {
+    background-color: transparent !important;
     box-shadow: none;
-    /* 필요에 따라 그림자 제거 */
+    /* 필요시 그림자 제거 */
 }
 
 
