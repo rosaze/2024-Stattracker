@@ -58,9 +58,6 @@ document.addEventListener("DOMContentLoaded", () => {
         <div class="goal-description">${goal.description}</div>
       </div>
       <div class="goal-progress">
-        <div class="progress-bar">
-          <div class="progress-fill" style="width: 0%"></div>
-        </div>
         <span class="progress-text">0% / ${goal.targetPercentage}%</span>
         ${
           goal.achieved
@@ -81,10 +78,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const goalElement = document.querySelector(
         `.goal-item:nth-child(${goals.indexOf(goal) + 1})`
       );
-      const progressFill = goalElement.querySelector(".progress-fill");
       const progressText = goalElement.querySelector(".progress-text");
 
-      progressFill.style.width = `${Math.min(progressPercentage, 100)}%`;
       progressText.textContent = `${currentStat}% / ${goal.targetPercentage}%`;
 
       if (currentStat >= goal.targetPercentage && !goal.achieved) {
@@ -106,10 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function getStat(category) {
-    // 이 함수는 기존의 스탯 로직과 연결되어야 합니다
     return parseInt(localStorage.getItem(`${category}-stat`)) || 0;
   }
 
-  // 주기적으로 목표 진행 상황 업데이트
   setInterval(updateGoalProgress, 5000);
 });

@@ -32,76 +32,189 @@
 }
 
 .add-goal-btn {
-    background: linear-gradient(45deg, #ff9a9e, #fad0c4);
-    color: rgb(244, 172, 172);
-    font-weight: bold;
+    background: rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    color: #4a0e4e;
+    font-weight: 600;
+    font-size: 1.1em;
+    padding: 15px 30px;
     cursor: pointer;
-    transition: transform 0.3s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    letter-spacing: 1px;
+    box-shadow: 0 8px 20px rgba(155, 89, 182, 0.15);
 }
 
 .add-goal-btn:hover {
-    transform: scale(1.05);
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(155, 89, 182, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+/* 클릭 효과 */
+.add-goal-btn:active {
+    transform: translateY(1px);
+    box-shadow: 0 5px 15px rgba(155, 89, 182, 0.15);
+}
+
+/* 빛나는 효과 */
+.add-goal-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transition: 0.5s;
+}
+
+.add-goal-btn:hover::before {
+    left: 100%;
 }
 
 .goal-item {
+    position: relative;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 15px;
     padding: 20px;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: transform 0.3s ease;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+    transition: background 0.5s ease;
 }
 
+/* 호버 효과 */
 .goal-item:hover {
-    transform: translateY(-5px);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* 프로그레스 배경 제거 */
+.goal-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: var(--progress-width, 0%);
+    background: none;
+    /* 배경을 제거하여 겹치지 않도록 설정 */
+    z-index: -1;
+}
+
+/* 목표 달성 상태 - 전체 바 배경색 변경 */
+.goal-item.goal-achieved {
+    background: linear-gradient(to right, rgba(150, 255, 150, 0.4), rgba(200, 255, 200, 0.4));
+}
+
+/* 달성 상태일 때 */
+.goal-item.achieved::before {
+    width: 100%;
+    background: linear-gradient(to right, rgba(200, 255, 200, 0.4) 0%, rgba(150, 255, 150, 0.4) 100%);
+}
+
+/* 각 카테고리별 미묘한 색상 차이 */
+.goal-item[data-category="Reading"] {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(255, 192, 203, 0.45));
+}
+
+.goal-item[data-category="Major study"] {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(230, 190, 255, 0.45));
+}
+
+.goal-item[data-category="Major study"] {
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.45), rgba(230, 190, 255, 0.45));
+}
+
+/* 목표 달성 시 배경색 설정 */
+.goal-item.achieved[data-category="Reading"],
+.goal-item.achieved[data-category="Major study"] {
+    background: linear-gradient(to right, rgba(150, 255, 150, 0.4), rgba(200, 255, 200, 0.4));
+}
+
+/* 목표 내용 스타일 */
 .goal-category {
-    font-weight: bold;
-    color: #af469c;
     background: rgba(255, 255, 255, 0.5);
     padding: 5px 15px;
     border-radius: 20px;
-    margin-bottom: 10px;
-    display: inline-block;
+    font-weight: bold;
+    z-index: 1;
 }
 
 .goal-description {
-    margin: 10px 0;
     color: #4a0e4e;
+    margin: 0;
+    z-index: 1;
 }
 
+/* 진행률 텍스트 */
 .goal-progress {
-    display: flex;
-    align-items: center;
-    gap: 15px;
+    color: #4a0e4e;
+    font-weight: 500;
+    z-index: 1;
 }
 
-.progress-bar {
-    flex-grow: 1;
-    height: 10px;
-    background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 5px;
-    overflow: hidden;
-}
-
-.progress-fill {
-    height: 100%;
-    background: linear-gradient(45deg, #e4b0d2, #fbc2eb);
-    transition: width 0.3s ease;
-}
-
-.goal-achieved {
-    background: linear-gradient(45deg, #f3d8eb, #c9ffd0);
-}
-
+/* Achieved 뱃지 */
 .achievement-badge {
-    background-color: #caffcc;
-    color: white;
+    background: rgba(150, 255, 150, 0.6);
+    color: #1a472a;
     padding: 5px 15px;
     border-radius: 20px;
-    font-size: 0.9em;
     font-weight: bold;
+    z-index: 1;
+}
+
+/* 반응형 조정 */
+@media (max-width: 768px) {
+    .add-goal-btn {
+        padding: 12px 25px;
+        font-size: 1em;
+    }
+}
+
+/* 다크모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .add-goal-btn {
+        background: rgba(255, 255, 255, 0.15);
+        color: #f0e6ff;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .add-goal-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+}
+
+@media (prefers-color-scheme: dark) {
+    .goal-item {
+        background: rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .goal-item:hover {
+        background: rgba(255, 255, 255, 0.35);
+    }
+
+    .goal-category {
+        background: rgba(255, 255, 255, 0.4);
+        color: #e0b0ff;
+    }
+
+    .goal-description {
+        color: #f0e6ff;
+    }
+
+    .achievement-badge {
+        background: linear-gradient(45deg, #4CAF50, #81C784);
+        color: #ffffff;
+    }
 }

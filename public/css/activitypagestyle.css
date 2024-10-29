@@ -1,35 +1,62 @@
-/* activities 페이지에서만 활동 기록 박스를 표시 */
+/* 전체 페이지 컨테이너 */
+.page-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    min-height: 100vh;
+    padding: 20px;
+    gap: 20px;
+    overflow: hidden;
+    /* 불필요한 스크롤 방지 */
+}
+
+/* Progress 섹션 */
+.progress-section {
+    flex: 0 0 120px;
+    /* 고정 너비 설정 */
+    height: calc(100vh - 40px);
+    /* 전체 높이에서 패딩 제외 */
+    position: relative;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+/* Progress bar 스타일 */
+.progress-bar {
+    position: sticky;
+    top: 20px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 10px;
+}
+
+/* Activities 섹션 */
 #activityRecords {
-    margin-top: 20px;
+    flex: 1;
+    min-height: calc(100vh - 40px);
+    overflow-y: auto;
+    /* 스크롤 가능하도록 설정 */
     padding: 15px;
     background-color: #f8f0fc;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    /* Ensure it takes full width */
 }
 
-/* activities 섹션이 active일 때만 표시 */
-#activities-history {
-    display: block;
-}
-
-/* 활동 기록 리스트 박스 스타일 */
+/* 활동 기록 컨테이너 */
 .history-container {
     background-color: #fff;
     padding: 15px;
-    margin-top: 20px;
+    margin-bottom: 20px;
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    /* Ensure container takes full width */
 }
 
-/* 카테고리별 기록 */
+/* 카테고리 스타일 */
 .category-records {
     margin-bottom: 20px;
-    width: 100%;
-    /* Ensure full width */
 }
 
 .category-records h4 {
@@ -44,14 +71,11 @@
     align-items: center;
     font-weight: bold;
     color: #4b0082;
-    width: 100%;
 }
 
-/* 기록 리스트 스타일 */
+/* 리스트 스타일 */
 #recordsList {
     margin-top: 0;
-    width: 100%;
-    /* Ensure full width */
 }
 
 #recordsList h4 {
@@ -59,15 +83,11 @@
     margin-bottom: 10px;
     border-bottom: 2px solid #ff1493;
     padding-bottom: 5px;
-    width: 100%;
-    /* Ensure full width */
 }
 
 #recordsList ul {
     list-style: none;
     padding-left: 0;
-    width: 100%;
-    /* Ensure full width */
 }
 
 #recordsList li {
@@ -79,47 +99,164 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 100%;
-    /* Ensure full width */
 }
 
-/* 반응형 조정 */
+/* 스크롤바 스타일링 */
+#activityRecords::-webkit-scrollbar {
+    width: 8px;
+}
+
+#activityRecords::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 4px;
+}
+
+#activityRecords::-webkit-scrollbar-thumb {
+    background: #ffd1dc;
+    border-radius: 4px;
+}
+
+/* 반응형 레이아웃 */
 @media (max-width: 768px) {
+    .page-container {
+        flex-direction: column;
+        padding: 10px;
+        overflow: visible;
+    }
+
+    .progress-section {
+        flex: none;
+        height: auto;
+        width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .progress-bar {
+        position: relative;
+        top: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    #activityRecords {
+        height: auto;
+        max-height: calc(100vh - 200px);
+        /* Progress 섹션 높이 고려 */
+        width: 100%;
+    }
+
     .category-records h4 {
         font-size: 1.1em;
         padding: 10px;
-        flex-wrap: wrap;
-        /* Wraps text to fit smaller screens */
     }
 
     #recordsList li {
         padding: 8px 12px;
         font-size: 1em;
-        flex-wrap: wrap;
-        /* Allows text to wrap */
-    }
-
-    #recordsList {
-        width: 100%;
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 
 @media (max-width: 480px) {
+    .page-container {
+        padding: 5px;
+    }
+
+    #activityRecords {
+        padding: 10px;
+    }
+
     .category-records h4 {
         font-size: 1em;
         padding: 8px;
-        flex-wrap: wrap;
     }
 
     #recordsList li {
         padding: 6px 10px;
         font-size: 0.9em;
-        flex-wrap: wrap;
-        /* Ensures the content wraps in smaller screens */
+    }
+}
+
+/* 기본 레이아웃 */
+.page-layout {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 100%;
+}
+
+/* progress bar 패널 */
+.progress-panel {
+    flex: 0 0 200px;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 활동기록 패널 */
+.activity-panel {
+    flex: 1;
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* 모바일 대응 */
+@media (max-width: 768px) {
+    .page-layout {
+        flex-direction: column;
+        padding: 10px;
     }
 
-    #recordsList {
+    .progress-panel {
         width: 100%;
-        /* Takes full width */
+        flex: none;
+    }
+
+    .activity-panel {
+        width: 100%;
+    }
+}
+
+/* 기본 컨테이너 */
+.container {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+}
+
+/* Progress와 Activities 패널들의 기본 스타일 */
+.progress-panel,
+.activities-panel {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+}
+
+/* Progress 패널 */
+.progress-panel {
+    width: 300px;
+}
+
+/* Activities 패널 */
+.activities-panel {
+    flex: 1;
+}
+
+/* 화면이 좁아질 때 수직 레이아웃으로 전환 */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    .progress-panel,
+    .activities-panel {
+        width: 100%;
     }
 }

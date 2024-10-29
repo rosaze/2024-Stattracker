@@ -1,12 +1,20 @@
 body {
     font-family: 'Kalnia Glaze', serif;
-    background-color: #f8f0fc;
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url('/2024-Stattracker/images/wallpaper.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    /* 이미지 반복 제거 */
+    background-attachment: fixed;
+    background-position: center;
+    background-color: transparent;
+    /* 배경색 투명화 */
 }
+
 
 nav {
     width: 100%;
@@ -87,6 +95,16 @@ main {
     display: block;
     animation: fadeIn 0.5s;
 }
+
+.content-section,
+.activities-container,
+.stat-bars-container,
+.activity-records-container {
+    background-color: transparent;
+    box-shadow: none;
+    /* 필요에 따라 그림자 제거 */
+}
+
 
 @keyframes fadeIn {
     from {
@@ -403,4 +421,166 @@ h2, h3 {
     color: #4b0082;
     margin-bottom: 20px;
     text-align: center;
+}
+
+/* 기존 스타일은 유지하고 반응형 관련 스타일만 수정/추가 */
+
+/* 네비게이션 반응형 */
+@media (max-width: 768px) {
+    nav ul {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    nav ul li {
+        margin: 5px 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    nav ul li a {
+        display: block;
+        width: 80%;
+        margin: 0 auto;
+    }
+
+    #pageTitle {
+        font-size: 2em;
+    }
+}
+
+/* 컨텐츠 섹션 반응형 */
+@media (max-width: 1024px) {
+    .content-section {
+        width: 90%;
+        padding: 15px;
+    }
+
+    .category {
+        flex: 0 1 calc(50% - 20px);
+        /* 태블릿에서 2열로 변경 */
+    }
+}
+
+@media (max-width: 768px) {
+    .category {
+        flex: 0 1 100%;
+        /* 모바일에서 1열로 변경 */
+    }
+
+    .activities-container {
+        flex-direction: column;
+        height: auto;
+        gap: 20px;
+    }
+
+    .stat-bars-container,
+    .activity-records-container {
+        height: 400px;
+        /* 모바일에서 각각 고정 높이 설정 */
+    }
+}
+
+/* 차트 영역 반응형 */
+@media (max-width: 768px) {
+    .chart-container {
+        height: 400px;
+        padding: 10px;
+    }
+
+    .stat-bar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+    }
+
+    .stat-bar .label {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .stat-bar .progress {
+        width: 100%;
+    }
+}
+
+/* 모달 반응형 */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        margin: 10% auto;
+        padding: 15px;
+    }
+
+    #activityForm input,
+    #activityForm textarea {
+        width: calc(100% - 20px);
+        padding: 8px;
+    }
+}
+
+/* 더 작은 화면 대응 */
+@media (max-width: 480px) {
+    body {
+        padding: 10px;
+    }
+
+    #pageTitle {
+        font-size: 1.8em;
+    }
+
+    .category h2 {
+        font-size: 1.2em;
+    }
+
+    .category button {
+        padding: 8px 16px;
+    }
+
+    .stat-bars-container,
+    .activity-records-container {
+        height: 300px;
+    }
+
+    #recordsList li {
+        font-size: 0.9em;
+        padding: 6px;
+    }
+}
+
+/* 다크모드 지원 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+    }
+
+    .content-section {
+        background-color: #2d2d2d;
+    }
+
+    nav {
+        background-color: #333;
+    }
+
+    .category {
+        background: linear-gradient(135deg,
+                rgba(248, 190, 203, 0.4),
+                rgba(206, 147, 216, 0.4),
+                rgba(173, 216, 230, 0.4));
+    }
+
+    .stat-bars-container,
+    .activity-records-container {
+        background-color: #2d2d2d;
+        color: #fff;
+    }
+
+    #recordsList li {
+        background-color: #3d3d3d;
+        color: #fff;
+    }
+
+    #recordsList li:hover {
+        background-color: #4d4d4d;
+    }
 }
