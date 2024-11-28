@@ -12,8 +12,18 @@ body {
     background-attachment: fixed;
     background-position: center;
     background-color: transparent;
+    text-shadow: none;
     /* 배경색 투명화 */
 }
+
+@font-face {
+    font-family: 'Kalnia Glaze';
+    src: url('/2024-Stattracker/public/fonts/KalniaGlaze-VariableFont_wdth%2Cwght.ttf') format('truetype');
+    font-weight: 100 700;
+    font-style: normal;
+    font-display: swap;
+}
+
 
 
 
